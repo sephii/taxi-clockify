@@ -56,26 +56,26 @@ class ClockifyBackend(BaseBackend):
         return response
 
     def get_workspace_id(self):
-        if self.workspace_id:
-            return self.workspace_id
-
-        workspaces_response = self.clockify_request(
-            "get", self.get_api_url("/workspaces")
-        )
-
-        if workspaces_response.status_code != 200:
-            raise TaxiException(
-                f"Could not get workspaces list, got error {workspaces_response.status_code}: {workspaces_response.content}."
+        if self.workspace_id is None:
+            workspaces_response = self.clockify_request(
+                "get", self.get_api_url("/workspaces")
             )
 
-        workspaces = workspaces_response.json()
+            if workspaces_response.status_code != 200:
+                raise TaxiException(
+                    f"Could not get workspaces list, got error {workspaces_response.status_code}: {workspaces_response.content}."
+                )
 
-        if len(workspaces) > 0:
-            raise TaxiException(
-                "You have more than one workspace available. Please add the workspace option to your backend url (eg. `clockify://?token=xxx&workspace=yyy`)."
-            )
+            workspaces = workspaces_response.json()
 
-        return workspaces[0]["id"]
+            if len(workspaces) > 0:
+                raise TaxiException(
+                    "You have more than one workspace available. Please add the workspace option to your backend url (eg. `clockify://?token=xxx&workspace=yyy`)."
+                )
+
+            self.workspace_id = workspaces[0]["id"]
+
+        return self.workspace_id
 
     def push_entry(self, date, entry):
         workspace_id = self.get_workspace_id()
