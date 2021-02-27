@@ -83,7 +83,7 @@ class ClockifyBackend(BaseBackend):
             "/workspaces/{workspace_id}/time-entries".format(workspace_id=workspace_id)
         )
 
-        if not isinstance(entry, tuple):
+        if not isinstance(entry.duration, tuple):
             raise PushEntryFailed(
                 "Only durations with a start and end time are supported."
             )
