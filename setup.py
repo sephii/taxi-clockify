@@ -6,9 +6,7 @@ from taxi_clockify import __version__
 install_requires = [
     "requests>=2.3.0",
     "taxi~=6.0",
-    "click>=7.0",
-    "pytz",
-    "arrow>=1.0.0",
+    "arrow>=0.15.8",
 ]
 
 setup(
