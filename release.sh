@@ -2,7 +2,6 @@
 
 release () {
     set -e
-    pytest
     echo "__version__ = '$1'" > taxi_clockify/__init__.py
     git commit -m "Bump version number to $1" taxi_clockify/__init__.py
     git tag -m "Release $1" -s $1
