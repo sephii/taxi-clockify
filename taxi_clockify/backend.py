@@ -88,7 +88,7 @@ class ClockifyBackend(BaseBackend):
                 "Only durations with a start and end time are supported."
             )
 
-        start_datetime = datetime.datetime.combine(date, entry.duration[0])
+        start_datetime = datetime.datetime.combine(date, entry.get_start_time())
         end_datetime = datetime.datetime.combine(date, entry.duration[1])
 
         start_datetime_str = (
