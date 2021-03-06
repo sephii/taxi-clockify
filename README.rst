@@ -1,5 +1,5 @@
 Clockify backend for Taxi
-======================
+=========================
 
 This is the Clockify backend for `Taxi <https://github.com/sephii/taxi>`_. It
 exposes the ``clockify`` protocol to push entries and fetch projects and
