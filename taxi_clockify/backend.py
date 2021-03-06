@@ -12,6 +12,7 @@ from taxi.aliases import aliases_database
 from taxi.backends import BaseBackend, PushEntryFailed
 from taxi.exceptions import TaxiException
 from taxi.projects import Activity, Project
+from taxi.timesheet.entry import AggregatedTimesheetEntry
 
 logger = logging.getLogger(__name__)
 
@@ -78,6 +79,13 @@ class ClockifyBackend(BaseBackend):
         return self.workspace_id
 
     def push_entry(self, date, entry):
+        if isinstance(entry, AggregatedTimesheetEntry):
+            for sub_entry in entry.entries:
+                self._push_entry(date, sub_entry)
+        else:
+            self._push_entry(date, entry)
+
+    def _push_entry(self, date, entry):
         workspace_id = self.get_workspace_id()
         push_url = self.get_api_url(
             "/workspaces/{workspace_id}/time-entries".format(workspace_id=workspace_id)
