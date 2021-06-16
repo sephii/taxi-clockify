@@ -6,7 +6,7 @@ release () {
     git commit -m "Bump version number to $1" taxi_clockify/__init__.py
     git tag -m "Release $1" -s $1
     git push origin $1
-    rm dist/*
+    rm -f dist/*
     ./setup.py sdist
     twine upload dist/*
 }
