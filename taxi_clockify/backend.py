@@ -109,7 +109,7 @@ class ClockifyBackend(BaseBackend):
             .to("UTC")
             .strftime("%Y-%m-%dT%H:%M:%SZ")
         )
-        project_id, task_id = aliases_database[entry.alias].mapping
+        project_id, task_id, *_ = aliases_database[entry.alias].mapping
 
         response = self.clockify_request(
             "post",
